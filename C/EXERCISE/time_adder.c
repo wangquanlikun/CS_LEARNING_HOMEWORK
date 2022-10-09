@@ -17,7 +17,11 @@ int main()
     minuteplus=addminute-hourplus*60;
     hour2=hour+hourplus;
     minute2=minuteplus;
-    if(minute2!=0)
+    if(hour2>24)
+        hour2 = hour2 - 24;
+    else if(hour2<0)
+        hour2 = hour2 + 24;
+    if (minute2 != 0)
         printf("%d%d",hour2,minute2);
     else if(minute2==0)
         printf("%d00",hour2);
