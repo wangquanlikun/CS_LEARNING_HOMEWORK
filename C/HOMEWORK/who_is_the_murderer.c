@@ -5,7 +5,7 @@ int main()
     scanf("%d",&n);
     int i;//i是凶手的号码
     int t = 0; //说真话的人数，要与n相等
-    int a[5],b[5];
+    int a[6],b[6];
     int p;
     for (p = 1; p <= 5;p++)
     {
