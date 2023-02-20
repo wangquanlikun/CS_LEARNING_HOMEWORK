@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<conio.h>
 
 void creat(int space[5][5]);
 
@@ -33,7 +34,7 @@ int main()
         }
 
         redo1:
-        scanf("%c", &c);
+        c = getch();//使用该方法直接直接探测键盘的输入。需要使用头文件<conio.h>
         int k;
         if(c=='A'||c=='a')
         {
