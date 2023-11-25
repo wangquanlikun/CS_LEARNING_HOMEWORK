@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 
 typedef struct adjacencynode{
     int weight;
@@ -12,7 +13,7 @@ typedef struct adjacencynode{
 
 typedef struct graphnode{
     int vertex;
-    char name[4];
+    wchar_t name[20];
     AdjacencyNode *firstedge;
 } GraphNode;
 
@@ -22,7 +23,7 @@ typedef struct closedge{
 } Closedge;
 
 GraphNode* create(int);
-void vertex(int, char[], GraphNode *);
+void vertex(int, wchar_t[], GraphNode *);
 void edge(int, int, int, GraphNode *);
 void dump(GraphNode *);
 void dfs(int, GraphNode *, int []);
@@ -48,8 +49,9 @@ int main(){
         }
         else if(strcmp(command,"VERTEX") == 0){
             int n;
-            char name[4];
-            scanf("%d %s", &n, name);
+            wchar_t name[20];
+            scanf("%d", &n);
+            fgetws(name, 20, stdin);
             vertex(n, name, root);
         }
         else if(strcmp(command,"EDGE") == 0){
@@ -97,15 +99,15 @@ GraphNode* create(int n){
     GraphNode *root = (GraphNode *)malloc(sizeof(GraphNode) * n);
     int i;
     for(i = 0; i < n; i++){
-        strcpy(root[i].name, "");
+        wcscpy(root[i].name, L"");
         root[i].vertex = i;
         root[i].firstedge = NULL;
     }
     return root;
 }
 
-void vertex(int n, char name[], GraphNode *root){
-    strcpy(root[n].name, name);
+void vertex(int n, wchar_t name[], GraphNode *root){
+    wcscpy(root[n].name, name);
     return;
 }
 
@@ -155,7 +157,8 @@ void edge(int n1, int n2, int weight, GraphNode *root){
 
 void dump(GraphNode *root){
     for(int i = 0; i < totalvertexnum; i++){
-        printf("%d: %s\t", root[i].vertex, root[i].name);
+        printf("%d", root[i].vertex);
+        wprintf(L" [%ls]: \t", root[i].name);
         AdjacencyNode *temp = root[i].firstedge;
         while(temp != NULL){
             printf("(%d, %d) -> %d\t", temp->ivertex, temp->jvertex, temp->weight);
@@ -170,7 +173,8 @@ void dump(GraphNode *root){
 }
 
 void dfs(int n, GraphNode *root, int visited[]){
-    printf("%d: %s\n", root[n].vertex, root[n].name);
+    printf("%d", root[n].vertex);
+    wprintf(L" [%ls]\n", root[n].name);
     visited[n] = 1;
     AdjacencyNode *temp = root[n].firstedge;
     while(temp != NULL){
